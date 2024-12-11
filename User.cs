@@ -93,5 +93,7 @@ namespace HealthCentre {
             this.Updated_at = UPDATED_AT;
         }
 
+        public User() { }
+
     }
 }

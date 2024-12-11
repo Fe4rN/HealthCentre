@@ -68,5 +68,111 @@ namespace HealthCentre {
 
             }
         }
+
+        protected void deleteButton_Click(object sender, EventArgs e) {
+            string pin = searchPatient.Text.Trim();
+
+            if (Regex.IsMatch(pin, "(^\\d{8}[A-Za-z]$)|(^[XYZ]\\d{7}[A-Za-z]$)\r\n")) {
+                string DBpath = Server.MapPath("~/data.db");
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+                conn.Open();
+
+                string query = "DELETE * FROM USERS WHERE pin = '" + pin + "';";
+                SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                da.DeleteCommand = comm;
+                da.DeleteCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
+
+        protected void saveButton_Click(object sender, EventArgs e) {
+            User updatedUser = new User();
+            bool isValid = true;
+
+            if (Regex.IsMatch(pinEdit.Text, @"(^\d{8}[A-Za-z]$)|(^[XYZ]\d{7}[A-Za-z]$)")) {
+                updatedUser.Pin = pinEdit.Text;
+            }
+            else {
+                isValid = false;
+                errorLabel.Text = "Invalid PIN format.";
+            }
+
+            if (Regex.IsMatch(emailEdit.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) {
+                updatedUser.Email = emailEdit.Text;
+            }
+            else {
+                isValid = false;
+                errorLabel.Text += "<br />Invalid Email format.";
+            }
+
+            if (Regex.IsMatch(firstEdit.Text, @"^[A-Za-z\s]+$")) {
+                updatedUser.First_Name = firstEdit.Text;
+            }
+            else {
+                isValid = false;
+                errorLabel.Text += "<br />Invalid First Name format.";
+            }
+
+            if (Regex.IsMatch(lastEdit.Text, @"^[A-Za-z\s]+$")) {
+                updatedUser.Last_Name = lastEdit.Text;
+            }
+            else {
+                isValid = false;
+                errorLabel.Text += "<br />Invalid Last Name format.";
+            }
+
+            if (Regex.IsMatch(dateEdit.Text, @"^\d{2}/\d{2}/\d{4}$")) {
+                updatedUser.Dob = dateEdit.Text;
+            }
+            else {
+                isValid = false;
+                errorLabel.Text += "<br />Invalid Date of Birth format.";
+            }
+
+            if (Regex.IsMatch(addressEdit.Text, @"^[\w\s,.-]+$")) {
+                updatedUser.Address = addressEdit.Text;
+            }
+            else {
+                isValid = false;
+                errorLabel.Text += "<br />Invalid Address format.";
+            }
+
+            if (Regex.IsMatch(phoneEdit.Text, @"^\d{9}$")) {
+                updatedUser.Phone = Convert.ToInt32(phoneEdit.Text);
+            }
+            else {
+                isValid = false;
+                errorLabel.Text += "<br />Invalid Phone format.";
+            }
+
+            if (isValid) {
+                string DBpath = Server.MapPath("~/data.db");
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+                conn.Open();
+
+                string query = "UPDATE USERS SET " +
+                    "pin = '" + updatedUser.Pin + "', " +
+                    "email = '" + updatedUser.Email + "', " +
+                    "first_name = '" + updatedUser.First_Name + "', " +
+                    "last_name = '" + updatedUser.Last_Name + "', " +
+                    "dob = '" + updatedUser.Dob + "', " +
+                    "address = '" + updatedUser.Address + "', " +
+                    "phone = " + updatedUser.Phone + ", " +
+                    "updated_at = '" + DateTime.Now.ToString("dd-MM-yyyy") + "' " +
+                    "WHERE pin = '" + updatedUser.Pin + "';";
+
+                SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                da.DeleteCommand = comm;
+                da.DeleteCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
+
     }
 }
