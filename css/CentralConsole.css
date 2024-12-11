@@ -11,3 +11,11 @@
     display:flex;
     justify-content: space-evenly;
 }
+
+.sectionTitle{
+    font-size:xx-large;
+}
+
+.formDoctor{
+    justify-items:center;
+}

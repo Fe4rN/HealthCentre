@@ -7,6 +7,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using Microsoft.Ajax.Utilities;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HealthCentre {
     public partial class CentralConsole : System.Web.UI.Page {
@@ -19,7 +22,7 @@ namespace HealthCentre {
         protected void searchButton_Click(object sender, EventArgs e) {
             string pin = searchPatient.Text.Trim();
 
-            if(Regex.IsMatch(pin, "(^\\d{8}[A-Za-z]$)|(^[XYZ]\\d{7}[A-Za-z]$)\r\n")) {
+            if(Regex.IsMatch(pin, @"(^(\d{8})([A-Z])$)|(^[XYZ]\d{7,8}[A-Z]$)")) {
                 string DBpath = Server.MapPath("~/data.db");
                 SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
                 conn.Open();
@@ -64,6 +67,8 @@ namespace HealthCentre {
                     addressEdit.Text = queriedUser.Address;
                     phoneEdit.Text = queriedUser.Phone.ToString();
 
+                } else {
+                    errorLabel.Text = "Patient not found";
                 }
 
             }
@@ -72,7 +77,7 @@ namespace HealthCentre {
         protected void deleteButton_Click(object sender, EventArgs e) {
             string pin = searchPatient.Text.Trim();
 
-            if (Regex.IsMatch(pin, "(^\\d{8}[A-Za-z]$)|(^[XYZ]\\d{7}[A-Za-z]$)\r\n")) {
+            if (Regex.IsMatch(pin, @"(^(\d{8})([A-Z])$)|(^[XYZ]\d{7,8}[A-Z]$)")) {
                 string DBpath = Server.MapPath("~/data.db");
                 SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
                 conn.Open();
@@ -91,8 +96,9 @@ namespace HealthCentre {
         protected void saveButton_Click(object sender, EventArgs e) {
             User updatedUser = new User();
             bool isValid = true;
+            errorLabel.Text = "";
 
-            if (Regex.IsMatch(pinEdit.Text, @"(^\d{8}[A-Za-z]$)|(^[XYZ]\d{7}[A-Za-z]$)")) {
+            if (Regex.IsMatch(pinEdit.Text, @"(^(\d{8})([A-Z])$)|(^[XYZ]\d{7,8}[A-Z]$)")) {
                 updatedUser.Pin = pinEdit.Text;
             }
             else {
@@ -174,5 +180,103 @@ namespace HealthCentre {
             }
         }
 
+        protected void createButton_Click(object sender, EventArgs e) {
+            User newUser = new User();
+            bool isValid = true;
+            createErrorLabel.Text = "";
+
+            if (Regex.IsMatch(createPin.Text, @"(^(\d{8})([A-Z])$)|(^[XYZ]\d{7,8}[A-Z]$)")) {
+                newUser.Pin = createPin.Text;
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text = "Invalid PIN format.";
+            }
+
+            String password = createPassword.Text;
+
+            using (MD5 md5Hash = MD5.Create()) {
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                password = BitConverter.ToString(data).Replace("-", string.Empty);
+            }
+            newUser.Password = password;
+
+            if (Regex.IsMatch(createEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) {
+                newUser.Email = createEmail.Text;
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text += "<br />Invalid Email format.";
+            }
+
+            if (Regex.IsMatch(createFirst.Text, @"^[A-Za-z\s]+$")) {
+                newUser.First_Name = createFirst.Text;
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text += "<br />Invalid First Name format.";
+            }
+
+            if (Regex.IsMatch(createLast.Text, @"^[A-Za-z\s]+$")) {
+                newUser.Last_Name = createLast.Text;
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text += "<br />Invalid Last Name format.";
+            }
+
+            if (Regex.IsMatch(createDate.Text, @"^\d{2}/\d{2}/\d{4}$")) {
+                newUser.Dob = createDate.Text;
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text += "<br />Invalid Date of Birth format.";
+            }
+
+            if (Regex.IsMatch(createAddress.Text, @"^[\w\s,.-]+$")) {
+                newUser.Address = createAddress.Text;
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text += "<br />Invalid Address format.";
+            }
+
+            if (Regex.IsMatch(createPhone.Text, @"^\d{9}$")) {
+                newUser.Phone = Convert.ToInt32(createPhone.Text);
+            }
+            else {
+                isValid = false;
+                createErrorLabel.Text += "<br />Invalid Phone format.";
+            }
+
+            if (isValid) {
+                string DBpath = Server.MapPath("~/data.db");
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+                conn.Open();
+
+                string query = "INSERT INTO USERS (pin, password, email, role, first_name, last_name, dob, address, phone, created_at, updated_at) VALUES (" +
+                    "'" + newUser.Pin + "', " +
+                    "'" + newUser.Password + "', " +
+                    "'" + newUser.Email + "', " +
+                    "'Patient', " +
+                    "'" + newUser.First_Name + "', " +
+                    "'" + newUser.Last_Name + "', " +
+                    "'" + newUser.Dob + "', " +
+                    "'" + newUser.Address + "', " +
+                    newUser.Phone + ", " +
+                    "'" + DateTime.Now.ToString("dd-MM-yyyy") + "', " +
+                    "'" + DateTime.Now.ToString("dd-MM-yyyy") + "'" +
+                    ");";
+
+
+                SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                da.InsertCommand = comm;
+                da.InsertCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
     }
 }
