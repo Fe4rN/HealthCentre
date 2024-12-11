@@ -13,7 +13,7 @@
 <body>
     <form id="form1" runat="server">
     <header>
-        <h1>Welcome to Healthcare Centre</h1>
+        <h1>Welcome to Healthcare 2 Centre</h1>
         <nav>
             <a href="/Login">Log In</a>
         </nav>
