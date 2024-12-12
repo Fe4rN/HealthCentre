@@ -108,7 +108,17 @@
                 </div>
             </div>
             <div>
-                <asp:ListBox ID="appointmentBox" runat="server"></asp:ListBox>
+                <asp:ListBox ID="appointmentBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="appointmentBox_SelectedIndexChanged"></asp:ListBox>
+                <div>
+                    <asp:Label ID="Label9" runat="server" Text="Appointment Date: "></asp:Label><asp:TextBox ID="editAppDate" runat="server"></asp:TextBox><br />
+                    <asp:Label ID="Label19" runat="server" Text="Diagnosis: "></asp:Label><asp:TextBox ID="editDiagnosis" runat="server"></asp:TextBox><br />
+                    <asp:Label ID="Label20" runat="server" Text="Treatment: "></asp:Label><asp:TextBox ID="editTreatment" runat="server"></asp:TextBox><br />
+                    <asp:Label ID="Label21" runat="server" Text="Notes: "></asp:Label><asp:TextBox ID="editNotes" runat="server"></asp:TextBox><br />
+
+                    <asp:Label ID="errorAppLabel" runat="server" Text=""></asp:Label><br />
+
+                    <asp:Button ID="saveAppInfo" runat="server" Text="SAVE APPOINTMENT INFO" OnClick="saveAppInfo_Click" /><asp:Button ID="deleteApp" runat="server" Text="DELETE APPOINTMENT" />
+                </div>
             </div>
         </div>
     </form>
