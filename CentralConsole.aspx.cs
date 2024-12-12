@@ -14,9 +14,10 @@ using System.Text;
 namespace HealthCentre {
     public partial class CentralConsole : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            //if (Session["role"] != "Doctor") {
-            //    Response.Redirect("index.aspx");
-            //}
+            string currentRole = Session["role"].ToString();
+            if (currentRole != "Doctor") {
+                Response.Redirect("index.aspx");
+            }
         }
 
         protected void searchButton_Click(object sender, EventArgs e) {
@@ -58,6 +59,8 @@ namespace HealthCentre {
                         columnValues["created_at"].ToString(),
                         columnValues["updated_at"].ToString()
                     );
+
+                    ViewState["queriedUser"] = queriedUser;
 
                     pinEdit.Text = queriedUser.Pin;
                     emailEdit.Text = queriedUser.Email;
@@ -117,7 +120,7 @@ namespace HealthCentre {
                 SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
                 conn.Open();
 
-                string query = "DELETE * FROM USERS WHERE pin = '" + pin + "';";
+                string query = "DELETE FROM USERS WHERE pin = '" + pin + "';";
                 SQLiteCommand comm = new SQLiteCommand(query, conn);
 
                 SQLiteDataAdapter da = new SQLiteDataAdapter();
@@ -125,7 +128,18 @@ namespace HealthCentre {
                 da.DeleteCommand.ExecuteNonQuery();
 
                 conn.Close();
+
+                pinEdit.Text = "";
+                emailEdit.Text = "";
+                firstEdit.Text = "";
+                lastEdit.Text = "";
+                dateEdit.Text = "";
+                addressEdit.Text = "";
+                phoneEdit.Text = "";
+                errorLabel.Text = "PATIENT DELETED SUCCESFULLY";
             }
+
+
         }
 
         protected void saveButton_Click(object sender, EventArgs e) {
@@ -392,6 +406,92 @@ namespace HealthCentre {
 
                 conn.Close();
             }
+        }
+
+        protected void deleteApp_Click(object sender, EventArgs e) {
+            Record currentRecord = (Record)ViewState["record"];
+
+            string DBpath = Server.MapPath("~/data.db");
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+            conn.Open();
+
+            string query = "DELETE FROM RECORDS WHERE id = " + currentRecord.Id + ";";
+            SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+            SQLiteDataAdapter da = new SQLiteDataAdapter();
+            da.DeleteCommand = comm;
+            da.DeleteCommand.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        protected void createAppointment_Click(object sender, EventArgs e) {
+            int doctor_id = Convert.ToInt32(Session["id"]);
+            User patient = (User)ViewState["queriedUser"];
+            int patient_id = patient.Id;
+            Record newRecord = new Record();
+            bool isValid = true;
+            createAppErrorLabel.Text = "";
+
+            newRecord.PatientId = patient_id;
+            newRecord.DoctorId = doctor_id;
+
+            if (Regex.IsMatch(createAppDate.Text, @"^\d{2}/\d{2}/\d{4}$")) {
+                newRecord.AppointmentDate = createAppDate.Text;
+            }
+            else {
+                isValid = false;
+                createAppErrorLabel.Text = "Invalid Appointment Date format.";
+            }
+
+            if (Regex.IsMatch(createDiagnosis.Text, @"^[A-Za-z]+$")) {
+                newRecord.Diagnosis = createDiagnosis.Text;
+            }
+            else {
+                isValid = false;
+                createAppErrorLabel.Text = "Invalid Diagnosis format.";
+            }
+
+            if (Regex.IsMatch(createTreatment.Text, @"^[a-zA-Z0-9]+$")) {
+                newRecord.Treatment = createTreatment.Text;
+            }
+            else {
+                isValid = false;
+                createAppErrorLabel.Text = "Invalid Treatment format.";
+            }
+
+            if (Regex.IsMatch(createNotes.Text, @"^[a-zA-Z0-9]+$")) {
+                newRecord.Notes = createNotes.Text;
+            }
+            else {
+                isValid = false;
+                createAppErrorLabel.Text = "Invalid note format.";
+            }
+
+
+            if (isValid) {
+                string DBpath = Server.MapPath("~/data.db");
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+                conn.Open();
+
+                string query = "INSERT INTO RECORDS (patient_id, doctor_id, appointment_date, diagnosis, treatment, notes) VALUES (" +
+                    "" + newRecord.PatientId + ", " +
+                    "" + newRecord.DoctorId + ", " +
+                    "'" + newRecord.AppointmentDate + "', " +
+                    "'" + newRecord.Diagnosis + "', " +
+                    "'" + newRecord.Treatment + "', " +
+                    "'" + newRecord.Notes + "');";
+
+
+                SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                da.InsertCommand = comm;
+                da.InsertCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+
         }
     }
 }

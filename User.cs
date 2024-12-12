@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace HealthCentre {
+    [Serializable]
     public class User {
         private int id;
         private string pin;

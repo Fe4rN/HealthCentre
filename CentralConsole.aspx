@@ -110,14 +110,27 @@
             <div>
                 <asp:ListBox ID="appointmentBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="appointmentBox_SelectedIndexChanged"></asp:ListBox>
                 <div>
-                    <asp:Label ID="Label9" runat="server" Text="Appointment Date: "></asp:Label><asp:TextBox ID="editAppDate" runat="server"></asp:TextBox><br />
-                    <asp:Label ID="Label19" runat="server" Text="Diagnosis: "></asp:Label><asp:TextBox ID="editDiagnosis" runat="server"></asp:TextBox><br />
-                    <asp:Label ID="Label20" runat="server" Text="Treatment: "></asp:Label><asp:TextBox ID="editTreatment" runat="server"></asp:TextBox><br />
-                    <asp:Label ID="Label21" runat="server" Text="Notes: "></asp:Label><asp:TextBox ID="editNotes" runat="server"></asp:TextBox><br />
+                    <div>
+                        <asp:Label ID="Label9" runat="server" Text="Appointment Date: "></asp:Label><asp:TextBox ID="editAppDate" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label19" runat="server" Text="Diagnosis: "></asp:Label><asp:TextBox ID="editDiagnosis" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label20" runat="server" Text="Treatment: "></asp:Label><asp:TextBox ID="editTreatment" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label21" runat="server" Text="Notes: "></asp:Label><asp:TextBox ID="editNotes" runat="server"></asp:TextBox><br />
 
-                    <asp:Label ID="errorAppLabel" runat="server" Text=""></asp:Label><br />
+                        <asp:Label ID="errorAppLabel" runat="server" Text=""></asp:Label><br />
 
-                    <asp:Button ID="saveAppInfo" runat="server" Text="SAVE APPOINTMENT INFO" OnClick="saveAppInfo_Click" /><asp:Button ID="deleteApp" runat="server" Text="DELETE APPOINTMENT" />
+                        <asp:Button ID="saveAppInfo" runat="server" Text="SAVE APPOINTMENT INFO" OnClick="saveAppInfo_Click" /><asp:Button ID="deleteApp" runat="server" Text="DELETE APPOINTMENT" OnClick="deleteApp_Click" />
+                    </div>
+                    <div>
+                        <asp:Label ID="Label18" runat="server" Text="CREATE PATIENT: "></asp:Label><br /><br />
+                        <asp:Label ID="Label22" runat="server" Text="Appointment Date: "></asp:Label><asp:TextBox ID="createAppDate" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label23" runat="server" Text="Diagnosis: "></asp:Label><asp:TextBox ID="createDiagnosis" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label24" runat="server" Text="Treatment: "></asp:Label><asp:TextBox ID="createTreatment" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label25" runat="server" Text="Notes: "></asp:Label><asp:TextBox ID="createNotes" runat="server"></asp:TextBox><br /><br />
+
+                        <asp:Label ID="createAppErrorLabel" runat="server" Text=""></asp:Label><br />
+                        <asp:Button ID="createAppointment" runat="server" Text="CREATE APPOINTMENT" OnClick="createAppointment_Click" />
+                    </div>
+
                 </div>
             </div>
         </div>
