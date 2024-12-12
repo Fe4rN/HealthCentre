@@ -19,10 +19,10 @@ namespace HealthCentre {
             string pin = userInput.Text.Trim();
             string password = passInput.Text.Trim();
 
-            using (MD5 md5Hash = MD5.Create()) {
-                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-                password = BitConverter.ToString(data).Replace("-", string.Empty);
-            }
+            //using (MD5 md5Hash = MD5.Create()) {
+                //byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                //password = BitConverter.ToString(data).Replace("-", string.Empty);
+            //}
 
             string DBpath = Server.MapPath("~/data.db");
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
