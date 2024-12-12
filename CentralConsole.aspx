@@ -78,6 +78,9 @@
                     <asp:Button ID="createButton" runat="server" Text="CREATE PATIENT" OnClick="createButton_Click" />
                 </div>
             </div>
+            <div>
+                <asp:ListBox ID="appointmentBox" runat="server"></asp:ListBox>
+            </div>
         </div>
     </form>
 </body>

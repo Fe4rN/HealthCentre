@@ -41,7 +41,6 @@ namespace HealthCentre {
                 String role = dt.Rows[0]["role"].ToString();
                 Session["pin"] = pin;
                 Session["role"] = role;
-
                 switch (role) {
                     case "Patient":
                         Response.Redirect("PatientHistory.aspx");

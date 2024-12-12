@@ -34,7 +34,7 @@ namespace HealthCentre {
                 DataTable dt = new DataTable();
                 dt.Load(reader);
 
-                conn.Close();
+                
 
                 if (dt.Rows.Count == 1) {
                     DataRow row = dt.Rows[0];
@@ -67,10 +67,24 @@ namespace HealthCentre {
                     addressEdit.Text = queriedUser.Address;
                     phoneEdit.Text = queriedUser.Phone.ToString();
 
+                    string appointmentQuery = "SELECT * FROM RECORDS WHERE patient_id = '" + queriedUser.Id + "';";
+                    SQLiteCommand appointmentComm = new SQLiteCommand(query, conn);
+
+                    SQLiteDataReader appointmentReader = comm.ExecuteReader();
+                    DataTable appointmentTable = new DataTable();
+                    appointmentTable.Load(appointmentReader);
+
+                    for(int i=0; i < appointmentTable.Rows.Count; i++) {
+                        appointmentTable.Columns.Add(appointmentTable.Rows[i]["diagnosis"].ToString());
+                    }
+
                 } else {
                     errorLabel.Text = "Patient not found";
                 }
 
+
+
+                conn.Close();
             }
         }
 
