@@ -7,10 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HealthCentre {
+namespace HealthCentre
+{
 
 
-    public partial class CentralConsole {
+    public partial class CentralConsole
+    {
 
         /// <summary>
         /// form1 control.
@@ -200,15 +202,6 @@ namespace HealthCentre {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveButton;
-
-        /// <summary>
-        /// Label9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
 
         /// <summary>
         /// Label10 control.
