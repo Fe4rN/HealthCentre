@@ -14,7 +14,13 @@ using System.Text;
 namespace HealthCentre {
     public partial class CentralConsole : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            if (Session["role"] == null) {
+                Response.Redirect("login.aspx");
+                return;
+            }
+
             string currentRole = Session["role"].ToString();
+
             if (currentRole != "Doctor") {
                 Response.Redirect("index.aspx");
             }
