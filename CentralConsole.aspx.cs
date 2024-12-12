@@ -501,5 +501,85 @@ namespace HealthCentre {
             }
 
         }
+
+        protected void appointmentBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (ViewState["Records"] is Dictionary<int, Record> records) {
+                int selectedId = Convert.ToInt32(appointmentBox.SelectedIndex);
+                Record selectedRecord = records[selectedId];
+                ViewState["record"] = selectedRecord;
+
+
+                editAppDate.Text = selectedRecord.AppointmentDate.ToString();
+                editDiagnosis.Text = selectedRecord.Diagnosis.ToString();
+                editTreatment.Text = selectedRecord.Treatment.ToString();
+                editNotes.Text = selectedRecord.Notes.ToString();
+            }
+        }
+
+        protected void saveAppInfo_Click(object sender, EventArgs e) {
+            Record currentRecord = (Record)ViewState["record"];
+            Record updatedAppointment = new Record();
+            bool isValid = true;
+            errorAppLabel.Text = "";
+
+            updatedAppointment.Id = currentRecord.Id;
+            updatedAppointment.PatientId = currentRecord.PatientId;
+            updatedAppointment.DoctorId = currentRecord.DoctorId;
+
+            if (Regex.IsMatch(editAppDate.Text, @"^\d{2}/\d{2}/\d{4}$")) {
+                updatedAppointment.AppointmentDate = editAppDate.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid Appointment Date format.";
+            }
+
+            if (Regex.IsMatch(editDiagnosis.Text, @"^[A-Za-z]+$")) {
+                updatedAppointment.Diagnosis = editDiagnosis.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid Diagnosis format.";
+            }
+
+            if (Regex.IsMatch(editTreatment.Text, @"^[a-zA-Z0-9]+$")) {
+                updatedAppointment.Treatment = editTreatment.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid Treatment format.";
+            }
+
+            if (Regex.IsMatch(editNotes.Text, @"^[a-zA-Z0-9]+$")) {
+                updatedAppointment.Notes = editNotes.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid note format.";
+            }
+
+            if (isValid) {
+                string DBpath = Server.MapPath("~/data.db");
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+                conn.Open();
+
+                string query = "UPDATE RECORDS SET " +
+                    "patient_id = " + updatedAppointment.PatientId + ", " +
+                    "doctor_id = " + updatedAppointment.DoctorId + ", " +
+                    "appointment_date = '" + updatedAppointment.AppointmentDate + "', " +
+                    "diagnosis = '" + updatedAppointment.Diagnosis + "', " +
+                    "treatment = '" + updatedAppointment.Treatment + "', " +
+                    "notes = '" + updatedAppointment.Notes + "' " +
+                    "WHERE id = " + updatedAppointment.Id + ";";
+
+                SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                da.DeleteCommand = comm;
+                da.DeleteCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
     }
 }
