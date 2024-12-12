@@ -107,6 +107,50 @@
                     </div>
                 </div>
             </div>
+                            <div class="container py-5">
+            <div class="row">
+                <!-- Appointment List Section -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Appointments</h5>
+                            <hr>
+                            <asp:ListBox ID="appointmentBox" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="appointmentBox_SelectedIndexChanged"></asp:ListBox>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Details Section -->
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Edit Appointment Details</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <asp:Label ID="Label9" runat="server" Text="Appointment Date:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="editAppDate" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                                                        <div class="mb-3">
+                                <asp:Label ID="Label19" runat="server" Text="Diagnosis:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="editDiagnosis" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="mb-3">
+                                <asp:Label ID="Label20" runat="server" Text="Treatment:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="editTreatment" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="mb-3">
+                                <asp:Label ID="Label21" runat="server" Text="Notes:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="editNotes" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <asp:Label ID="errorAppLabel" runat="server" Text="" CssClass="text-danger"></asp:Label>
+                            <div class="d-flex justify-content-end mt-3">
+                                <asp:Button ID="saveAppInfo" runat="server" Text="Save Appointment Info" CssClass="btn btn-success me-2" OnClick="saveAppInfo_Click" />
+                                <asp:Button ID="deleteApp" runat="server" Text="Delete Appointment" CssClass="btn btn-danger" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

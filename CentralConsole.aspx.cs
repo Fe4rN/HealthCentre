@@ -34,7 +34,7 @@ namespace HealthCentre {
                 DataTable dt = new DataTable();
                 dt.Load(reader);
 
-                conn.Close();
+                
 
                 if (dt.Rows.Count == 1) {
                     DataRow row = dt.Rows[0];
@@ -67,10 +67,45 @@ namespace HealthCentre {
                     addressEdit.Text = queriedUser.Address;
                     phoneEdit.Text = queriedUser.Phone.ToString();
 
+                    string appointmentQuery = "SELECT * FROM RECORDS WHERE patient_id = '" + queriedUser.Id + "';";
+                    SQLiteCommand appointmentComm = new SQLiteCommand(appointmentQuery, conn);
+
+                    SQLiteDataReader appointmentReader = appointmentComm.ExecuteReader();
+                    DataTable appointmentTable = new DataTable();
+                    appointmentTable.Load(appointmentReader);
+
+                    Dictionary<int,Record> records = new Dictionary<int,Record>();
+                    for(int i=0; i < appointmentTable.Rows.Count; i++) {
+                        Record appointment = new Record(
+                            Convert.ToInt32(appointmentTable.Rows[i]["id"]),
+                            Convert.ToInt32(appointmentTable.Rows[i]["patient_id"]),
+                            Convert.ToInt32(appointmentTable.Rows[i]["doctor_id"]),
+                            appointmentTable.Rows[i]["appointment_date"].ToString(),
+                            appointmentTable.Rows[i]["diagnosis"].ToString(),
+                            appointmentTable.Rows[i]["treatment"].ToString(),
+                            appointmentTable.Rows[i]["notes"].ToString()
+                            );
+                        records[i] = appointment;
+                    }
+
+                    ViewState["Records"] = records;
+
+                    for(int i = 0; i < records.Count; i++) {
+                        ListItem item = new ListItem
+                        {
+                            Text = "Appointment at: " + records[i].AppointmentDate + ".",
+                            Value = records[i].Id.ToString()
+                        };
+                        appointmentBox.Items.Add(item);
+                    }
+
                 } else {
                     errorLabel.Text = "Patient not found";
                 }
 
+
+
+                conn.Close();
             }
         }
 
@@ -274,6 +309,86 @@ namespace HealthCentre {
                 SQLiteDataAdapter da = new SQLiteDataAdapter();
                 da.InsertCommand = comm;
                 da.InsertCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
+
+        protected void appointmentBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (ViewState["Records"] is Dictionary<int, Record> records) {
+                int selectedId = Convert.ToInt32(appointmentBox.SelectedIndex);
+                Record selectedRecord = records[selectedId];
+                ViewState["record"] = selectedRecord;
+
+
+                editAppDate.Text = selectedRecord.AppointmentDate.ToString();
+                editDiagnosis.Text = selectedRecord.Diagnosis.ToString();
+                editTreatment.Text = selectedRecord.Treatment.ToString();
+                editNotes.Text = selectedRecord.Notes.ToString();
+            }
+        }
+
+        protected void saveAppInfo_Click(object sender, EventArgs e) {
+            Record currentRecord = (Record)ViewState["record"];
+            Record updatedAppointment = new Record();
+            bool isValid = true;
+            errorAppLabel.Text = "";
+
+            updatedAppointment.Id = currentRecord.Id;
+            updatedAppointment.PatientId = currentRecord.PatientId;
+            updatedAppointment.DoctorId = currentRecord.DoctorId;
+
+            if (Regex.IsMatch(editAppDate.Text, @"^\d{2}/\d{2}/\d{4}$")) {
+                updatedAppointment.AppointmentDate = editAppDate.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid Appointment Date format.";
+            }
+
+            if (Regex.IsMatch(editDiagnosis.Text, @"^[A-Za-z]+$")) {
+                updatedAppointment.Diagnosis = editDiagnosis.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid Diagnosis format.";
+            }
+
+            if (Regex.IsMatch(editTreatment.Text, @"^[a-zA-Z0-9]+$")) {
+                updatedAppointment.Treatment = editTreatment.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid Treatment format.";
+            }
+
+            if (Regex.IsMatch(editNotes.Text, @"^[a-zA-Z0-9]+$")) {
+                updatedAppointment.Notes = editNotes.Text;
+            }
+            else {
+                isValid = false;
+                errorAppLabel.Text = "Invalid note format.";
+            }
+
+            if (isValid) {
+                string DBpath = Server.MapPath("~/data.db");
+                SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+                conn.Open();
+
+                string query = "UPDATE RECORDS SET " +
+                    "patient_id = " + updatedAppointment.PatientId + ", " +
+                    "doctor_id = " + updatedAppointment.DoctorId + ", " +
+                    "appointment_date = '" + updatedAppointment.AppointmentDate + "', " +
+                    "diagnosis = '" + updatedAppointment.Diagnosis + "', " +
+                    "treatment = '" + updatedAppointment.Treatment + "', " +
+                    "notes = '" + updatedAppointment.Notes + "' " +
+                    "WHERE id = " + updatedAppointment.Id + ";";
+
+                SQLiteCommand comm = new SQLiteCommand(query, conn);
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                da.DeleteCommand = comm;
+                da.DeleteCommand.ExecuteNonQuery();
 
                 conn.Close();
             }
