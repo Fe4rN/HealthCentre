@@ -36,8 +36,14 @@
                 <div class="card-body">
                     <h2 class="card-title">Medical Records</h2>
                     <hr>
-                    <asp:GridView ID="gvRecords" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="true">
-                    </asp:GridView>
+                    <asp:ListBox ID="recordList" runat="server" AutoPostBack="true" OnSelectedIndexChanged="recordList_SelectedIndexChanged"></asp:ListBox>
+                    <div>
+                        <asp:Label ID="Label1" runat="server" Text="Appointment date: "></asp:Label><asp:Label ID="appDate" runat="server" Text="N/A"></asp:Label><br />
+                        <asp:Label ID="Label2" runat="server" Text="Doctor: "></asp:Label><asp:Label ID="appDoc" runat="server" Text="N/A"></asp:Label><br />
+                        <asp:Label ID="Label3" runat="server" Text="Diagnosis: "></asp:Label><asp:Label ID="appDiagnosis" runat="server" Text="N/A"></asp:Label><br />
+                        <asp:Label ID="Label4" runat="server" Text="Treatment: "></asp:Label><asp:Label ID="appTreatment" runat="server" Text="N/A"></asp:Label><br />
+                        <asp:Label ID="Label6" runat="server" Text="Notes: "></asp:Label><asp:Label ID="appNotes" runat="server" Text="N/A"></asp:Label><br />
+                    </div>
                 </div>
             </div>
         </div>
