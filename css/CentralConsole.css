@@ -1,0 +1,21 @@
+﻿* {
+    border: 1px solid black;
+}
+
+
+#superContainer{
+    margin:0, 25%, 0, 25%;
+}
+
+#formContainer{
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.sectionTitle{
+    font-size:xx-large;
+}
+
+.formDoctor{
+    justify-items:center;
+}
