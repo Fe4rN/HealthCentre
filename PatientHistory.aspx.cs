@@ -70,21 +70,41 @@ namespace Healthcare_Alex_Fedor
             }
         }
 
+        // ... (resto de tu código)
+
         private void LoadPatientRecords(int patientId)
         {
             string DBpath = Server.MapPath("~/data.db");
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;"))
             {
-                conn.Open();
-                string query = "SELECT appointment_date, diagnosis, treatment, notes FROM RECORDS WHERE patient_id = @patientId";
-                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                try
                 {
-                    cmd.Parameters.AddWithValue("@patientId", patientId);
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+                    Console.WriteLine("Conexión a la base de datos establecida."); 
+
+                    string query = "SELECT appointment_date, diagnosis, treatment, notes FROM RECORDS WHERE patient_id = @patientId";
+                    Console.WriteLine("Consulta SQL: " + query);
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
                     {
-                        gvRecords.DataSource = reader;
-                        gvRecords.DataBind();
+                        cmd.Parameters.AddWithValue("@patientId", patientId);
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                gvRecords.DataSource = reader;
+                                gvRecords.DataBind();
+                            }
+                            else
+                            {
+                                //lblMessage.Text = "No se encontraron registros para este paciente.";
+                            }
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al cargar los registros: " + ex.Message);
                 }
             }
         }
