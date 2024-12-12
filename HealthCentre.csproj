@@ -121,6 +121,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="images\healthcare.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="css\CentralConsole.css" />
     <Content Include="css\index.css" />

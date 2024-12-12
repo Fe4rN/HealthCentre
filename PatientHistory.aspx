@@ -43,7 +43,6 @@
                         <asp:Label ID="Label3" runat="server" Text="Diagnosis: "></asp:Label><asp:Label ID="appDiagnosis" runat="server" Text="N/A"></asp:Label><br />
                         <asp:Label ID="Label4" runat="server" Text="Treatment: "></asp:Label><asp:Label ID="appTreatment" runat="server" Text="N/A"></asp:Label><br />
                         <asp:Label ID="Label6" runat="server" Text="Notes: "></asp:Label><asp:Label ID="appNotes" runat="server" Text="N/A"></asp:Label><br />
-                    </div>
                 </div>
             </div>
         </div>
