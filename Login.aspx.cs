@@ -19,10 +19,10 @@ namespace HealthCentre {
             string pin = userInput.Text.Trim();
             string password = passInput.Text.Trim();
 
-            //using (MD5 md5Hash = MD5.Create()) {
-                //byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-                //password = BitConverter.ToString(data).Replace("-", string.Empty);
-            //}
+            using (MD5 md5Hash = MD5.Create()) {
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                password = BitConverter.ToString(data).Replace("-", string.Empty);
+            }
 
             string DBpath = Server.MapPath("~/data.db");
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
@@ -39,8 +39,10 @@ namespace HealthCentre {
 
             if (dt.Rows.Count == 1) {
                 String role = dt.Rows[0]["role"].ToString();
+                int id = Convert.ToInt32(dt.Rows[0]["id"]);
                 Session["pin"] = pin;
                 Session["role"] = role;
+                Session["id"] = id;
                 switch (role) {
                     case "Patient":
                         Response.Redirect("PatientHistory.aspx");

@@ -107,48 +107,30 @@
                     </div>
                 </div>
             </div>
-                            <div class="container py-5">
-            <div class="row">
-                <!-- Appointment List Section -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Appointments</h5>
-                            <hr>
-                            <asp:ListBox ID="appointmentBox" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="appointmentBox_SelectedIndexChanged"></asp:ListBox>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <asp:ListBox ID="appointmentBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="appointmentBox_SelectedIndexChanged"></asp:ListBox>
+                <div>
+                    <div>
+                        <asp:Label ID="Label9" runat="server" Text="Appointment Date: "></asp:Label><asp:TextBox ID="editAppDate" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label19" runat="server" Text="Diagnosis: "></asp:Label><asp:TextBox ID="editDiagnosis" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label20" runat="server" Text="Treatment: "></asp:Label><asp:TextBox ID="editTreatment" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label21" runat="server" Text="Notes: "></asp:Label><asp:TextBox ID="editNotes" runat="server"></asp:TextBox><br />
 
-                <!-- Appointment Details Section -->
-                <div class="col-lg-8">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Edit Appointment Details</h5>
-                            <hr>
-                            <div class="mb-3">
-                                <asp:Label ID="Label9" runat="server" Text="Appointment Date:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="editAppDate" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                                                        <div class="mb-3">
-                                <asp:Label ID="Label19" runat="server" Text="Diagnosis:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="editDiagnosis" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="mb-3">
-                                <asp:Label ID="Label20" runat="server" Text="Treatment:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="editTreatment" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="mb-3">
-                                <asp:Label ID="Label21" runat="server" Text="Notes:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="editNotes" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <asp:Label ID="errorAppLabel" runat="server" Text="" CssClass="text-danger"></asp:Label>
-                            <div class="d-flex justify-content-end mt-3">
-                                <asp:Button ID="saveAppInfo" runat="server" Text="Save Appointment Info" CssClass="btn btn-success me-2" OnClick="saveAppInfo_Click" />
-                                <asp:Button ID="deleteApp" runat="server" Text="Delete Appointment" CssClass="btn btn-danger" />
-                            </div>
-                        </div>
+                        <asp:Label ID="errorAppLabel" runat="server" Text=""></asp:Label><br />
+
+                        <asp:Button ID="saveAppInfo" runat="server" Text="SAVE APPOINTMENT INFO" OnClick="saveAppInfo_Click" /><asp:Button ID="deleteApp" runat="server" Text="DELETE APPOINTMENT" OnClick="deleteApp_Click" />
                     </div>
+                    <div>
+                        <asp:Label ID="Label18" runat="server" Text="CREATE PATIENT: "></asp:Label><br /><br />
+                        <asp:Label ID="Label22" runat="server" Text="Appointment Date: "></asp:Label><asp:TextBox ID="createAppDate" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label23" runat="server" Text="Diagnosis: "></asp:Label><asp:TextBox ID="createDiagnosis" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label24" runat="server" Text="Treatment: "></asp:Label><asp:TextBox ID="createTreatment" runat="server"></asp:TextBox><br />
+                        <asp:Label ID="Label25" runat="server" Text="Notes: "></asp:Label><asp:TextBox ID="createNotes" runat="server"></asp:TextBox><br /><br />
+
+                        <asp:Label ID="createAppErrorLabel" runat="server" Text=""></asp:Label><br />
+                        <asp:Button ID="createAppointment" runat="server" Text="CREATE APPOINTMENT" OnClick="createAppointment_Click" />
+                    </div>
+
                 </div>
             </div>
         </div>
