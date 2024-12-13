@@ -75,7 +75,7 @@
                             </div>
                             <div class="mb-2">
                                 <asp:Label ID="Label11" runat="server" Text="Password:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="createPassword" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="createPassword" runat="server" TextMode="Password" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="mb-2">
                                 <asp:Label ID="Label12" runat="server" Text="Email:" CssClass="form-label"></asp:Label>

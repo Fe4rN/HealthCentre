@@ -8,11 +8,27 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Security;
 
 namespace HealthCentre {
     public partial class Login : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            if (!IsPostBack) {
+                if (Session["role"] != null) {
+                    switch (Session["role"].ToString()) {
+                        case "Patient":
+                            Response.Redirect("PatientHistory.aspx");
+                            break;
 
+                        case "Doctor":
+                            Response.Redirect("CentralConsole.aspx");
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
         }
 
         protected void LoginButton_Click(object sender, EventArgs e) {
@@ -53,7 +69,6 @@ namespace HealthCentre {
                         break;
 
                     default:
-                        //TO DO---
                         break;
                 }
             }

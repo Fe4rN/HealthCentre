@@ -139,7 +139,9 @@ namespace Healthcare_Alex_Fedor {
 
         protected void LogoutButton_Click(object sender, EventArgs e)
         {
-
+            Session.Clear();
+            ViewState.Clear();
+            Response.Redirect("Login.aspx");
         }
     }
 }

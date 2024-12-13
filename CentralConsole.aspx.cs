@@ -23,7 +23,7 @@ namespace HealthCentre {
                 string currentRole = Session["role"].ToString();
 
                 if (currentRole != "Doctor") {
-                    Response.Redirect("index.aspx");
+                    Response.Redirect("login.aspx");
                 }
             }
         }
@@ -376,7 +376,7 @@ namespace HealthCentre {
                 errorAppLabel.Text = "Invalid Diagnosis format.";
             }
 
-            if (Regex.IsMatch(editTreatment.Text, @"^[a-zA-Z0-9]+$")) {
+            if (Regex.IsMatch(editTreatment.Text, @"^[a-zA-Z0-9\s\p{P}]+$")) {
                 updatedAppointment.Treatment = editTreatment.Text;
             }
             else {
@@ -384,13 +384,7 @@ namespace HealthCentre {
                 errorAppLabel.Text = "Invalid Treatment format.";
             }
 
-            if (Regex.IsMatch(editNotes.Text, @"^[a-zA-Z0-9]+$")) {
-                updatedAppointment.Notes = editNotes.Text;
-            }
-            else {
-                isValid = false;
-                errorAppLabel.Text = "Invalid note format.";
-            }
+            updatedAppointment.Notes = editNotes.Text;
 
             if (isValid) {
                 string DBpath = Server.MapPath("~/data.db");
@@ -460,7 +454,7 @@ namespace HealthCentre {
                 createAppErrorLabel.Text = "Invalid Diagnosis format.";
             }
 
-            if (Regex.IsMatch(createTreatment.Text, @"^[a-zA-Z0-9]+$")) {
+            if (Regex.IsMatch(createTreatment.Text, @"^[a-zA-Z0-9\s\p{P}]+$")) {
                 newRecord.Treatment = createTreatment.Text;
             }
             else {
@@ -468,13 +462,7 @@ namespace HealthCentre {
                 createAppErrorLabel.Text = "Invalid Treatment format.";
             }
 
-            if (Regex.IsMatch(createNotes.Text, @"^[a-zA-Z0-9]+$")) {
-                newRecord.Notes = createNotes.Text;
-            }
-            else {
-                isValid = false;
-                createAppErrorLabel.Text = "Invalid note format.";
-            }
+            newRecord.Notes = createNotes.Text;
 
 
             if (isValid) {
@@ -504,7 +492,9 @@ namespace HealthCentre {
 
         protected void LogoutButton_Click(object sender, EventArgs e)
         {
-
+            Session.Clear();
+            ViewState.Clear();
+            Response.Redirect("Login.aspx");
         }
     }
 }
