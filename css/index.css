@@ -1,11 +1,7 @@
-﻿* {
-    border: 1px solid black;
-}
-/*For debugging purposes*/
-
+﻿
 header {
     display: flex;
-    justify-content: space-between; /*Alex, to see this you have to compile, Designer doesn't like flex ig*/
+    justify-content: space-between;
     align-items: center;
     font-size: 40px;
 }

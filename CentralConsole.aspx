@@ -13,7 +13,6 @@
     <form id="form1" runat="server">
         <div class="container py-5">
             <div class="row">
-                <!-- Search and Edit Section -->
                 <div class="col-lg-6 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -62,8 +61,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Create Section -->
                 <div class="col-lg-6">
                     <div class="card shadow-sm">
                         <div class="card-body">

@@ -1,8 +1,3 @@
-﻿/** {
-    border: 1px solid black;
-}*/
-/*For debugging purposes*/
-
-#error {
+﻿#error {
     visibility: hidden;
 }

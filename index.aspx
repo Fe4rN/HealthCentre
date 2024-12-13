@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/index">HealthCenter</a>
@@ -22,7 +21,6 @@
         </div>
     </nav>
 
-    <!-- Header Section -->
     <header class="bg-primary text-white text-center py-5">
         <div class="container">
             <h1 class="display-4">Welcome to HealthCenter</h1>
@@ -31,7 +29,6 @@
         </div>
     </header>
 
-    <!-- About Section -->
     <section id="about" class="py-5 bg-light">
         <div class="container">
             <div class="row align-items-center">
@@ -47,7 +44,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">Our Services</h2>
@@ -74,7 +70,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="text-center py-3 bg-dark text-white">
         <p class="mb-0">&copy; 2024 HealthCenter. All rights reserved.</p>
     </footer>
