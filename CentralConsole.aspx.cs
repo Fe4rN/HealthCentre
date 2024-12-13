@@ -501,5 +501,10 @@ namespace HealthCentre {
             }
 
         }
+
+        protected void LogoutButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

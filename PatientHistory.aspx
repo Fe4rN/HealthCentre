@@ -46,6 +46,9 @@
                 </div>
             </div>
         </div>
+                        <div class="d-flex justify-content-end mb-4">
+                <asp:Button ID="logoutButton" runat="server" Text="Logout" CssClass="btn btn-secondary" OnClick="LogoutButton_Click" />
+            </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

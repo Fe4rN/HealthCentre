@@ -136,5 +136,10 @@ namespace Healthcare_Alex_Fedor {
                 appNotes.Text = selectedRecord.Notes.ToString();
             }
         }
+
+        protected void LogoutButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
