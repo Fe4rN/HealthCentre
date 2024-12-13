@@ -118,32 +118,6 @@
                         </div>
                     </div>
                     <div class="card shadow-sm mt-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Create Appointment</h5>
-                            <hr>
-                            <div class="mb-3">
-                                <asp:Label ID="Label22" runat="server" Text="Appointment Date:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="createAppDate" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="mb-3">
-                                <asp:Label ID="Label23" runat="server" Text="Diagnosis:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="createDiagnosis" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="mb-3">
-                                <asp:Label ID="Label24" runat="server" Text="Treatment:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="createTreatment" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="mb-3">
-                                <asp:Label ID="Label25" runat="server" Text="Notes:" CssClass="form-label"></asp:Label>
-                                <asp:TextBox ID="createNotes" runat="server" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <asp:Label ID="createAppErrorLabel" runat="server" Text="" CssClass="text-danger"></asp:Label>
-                            <asp:Button ID="createAppointment" runat="server" Text="Create Appointment" CssClass="btn btn-primary w-100 mt-3" OnClick="createAppointment_Click" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card shadow-sm">
                          <div class="card-body">
                             <h5 class="card-title">Edit Appointment</h5>
                             <hr>
@@ -170,6 +144,37 @@
                             </div>
                         </div>
                     </div>
+                 </div>
+                <div class="col-lg-6">
+                        <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Create Appointment</h5>
+                            
+                            <div class="mb-3">
+                                <asp:Label ID="Label22" runat="server" Text="Appointment Date:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="createAppDate" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="mb-3">
+                                <asp:Label ID="Label23" runat="server" Text="Diagnosis:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="createDiagnosis" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="mb-3">
+                                <asp:Label ID="Label24" runat="server" Text="Treatment:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="createTreatment" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="mb-3">
+                                <asp:Label ID="Label25" runat="server" Text="Notes:" CssClass="form-label"></asp:Label>
+                                <asp:TextBox ID="createNotes" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <asp:Label ID="createAppErrorLabel" runat="server" Text="" CssClass="text-danger"></asp:Label>
+                            <asp:Button ID="createAppointment" runat="server" Text="Create Appointment" CssClass="btn btn-primary w-100 mt-3" OnClick="createAppointment_Click" />
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
               </div>
                             <div class="d-flex justify-content-end mb-4">
